@@ -46,11 +46,20 @@ while True:
         break
 
     elif correct.startswith("n"):
-        coord = input("Enter the coordinates for your location (If you don't know your coordinites, go to https://latlong.net. Format is eg. 47.620422,-122.349358 ")
-        lat,lon = coord.split(",")
+        zip_code = input("Enter your zip code: ")
+
+        url = f"https://api.zippopotam.us/us/{zip_code}"
+        response = requests.get(url)
+
+        data = response.json()
+
+        lat = data["places"][0]["latitude"]
+        lon = data["places"][0]["longitude"]
+        city = data["places"][0]["place name"] 
+
         while True:
             try:
-                print (f"The weather for the coordinates {lat}, {lon} is:")
+                print (f"The weather for the zip code {city} ({lat}, {lon}) is:")
 
                 # Step 2: ask NOAA what forecast grid this location belongs to
                 url = f"https://api.weather.gov/points/{lat},{lon}"
