@@ -58,7 +58,7 @@ while True:
                 lat = data["places"][0]["latitude"]
                 lon = data["places"][0]["longitude"]
                 city = data["places"][0]["place name"] 
-                print (f"The weather for the zip code {city} ({lat}, {lon}) is:")
+                print (f"The weather for {city} ({lat}, {lon}) is:")
                 print("--------------------")
 
                 # Step 2: ask NOAA what forecast grid this location belongs to
