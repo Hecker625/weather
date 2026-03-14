@@ -40,26 +40,26 @@ for period in periods:
     print("\n")
 
 while True:
-    correct = input("\nIs this the correct location? ").lower()
-    if correct.startswith("y"):
+    correct = input("\nWould you like to change the location? ").lower()
+    if correct.startswith("n"):
         print("Thank you for using the weather app.")
         break
 
-    elif correct.startswith("n"):
-        zip_code = input("Enter your zip code: ")
-
-        url = f"https://api.zippopotam.us/us/{zip_code}"
-        response = requests.get(url)
-
-        data = response.json()
-
-        lat = data["places"][0]["latitude"]
-        lon = data["places"][0]["longitude"]
-        city = data["places"][0]["place name"] 
-
+    elif correct.startswith("y"):
         while True:
             try:
+                zip_code = input("Enter your zip code: ")
+
+                url = f"https://api.zippopotam.us/us/{zip_code}"
+                response = requests.get(url)
+
+                data = response.json()
+
+                lat = data["places"][0]["latitude"]
+                lon = data["places"][0]["longitude"]
+                city = data["places"][0]["place name"] 
                 print (f"The weather for the zip code {city} ({lat}, {lon}) is:")
+                print("--------------------")
 
                 # Step 2: ask NOAA what forecast grid this location belongs to
                 url = f"https://api.weather.gov/points/{lat},{lon}"
@@ -71,12 +71,12 @@ while True:
                 # Step 3: get the forecast URL from the response
                 forecast_url = data["properties"]["forecast"]
 
-                # Step 4: request the forecast
+                    # Step 4: request the forecast
                 forecast_response = requests.get(forecast_url)
 
                 forecast_data = forecast_response.json()
 
-                # Step 5: print the forecast periods
+                    # Step 5: print the forecast periods
                 periods = forecast_data["properties"]["periods"]
 
                 for period in periods:
@@ -87,7 +87,7 @@ while True:
                 break
 
             except:
-                print("Coordinites not recognized. Please enter the coordinates in this format: latitude,longitude")
+                print("Zip code not recognized. Please try again.")
 
     else:
         print("Invalid input. Please try again.")
